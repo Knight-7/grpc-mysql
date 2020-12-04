@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+option go_package = "gpc_dao";
+
+package rpc_dao;
+
+service DAO {
+    rpc GetUsers(GetUsersRequest) returns (stream GetUserResponse) {}
+    rpc GetUserById(GetUserByIdRequest) returns (GetUserResponse) {}
+    rpc AddUser(AddUserRequest) returns (ExecSQLResponse) {}
+    rpc UpdateUser(UpdateUserRequest) returns (ExecSQLResponse) {}
+    rpc DeleteUser(DeleteUserRequest) returns (ExecSQLResponse) {}
+}
+
+message GetUsersRequest {
+
+}
+
+message GetUserByIdRequest {
+    int32 id = 2;
+}
+
+message AddUserRequest {
+    User user = 2;
+}
+
+message UpdateUserRequest {
+    User user = 2;
+}
+
+message DeleteUserRequest {
+    int32 id = 2;
+}
+
+message GetUserResponse {
+    User user = 1;
+}
+
+message ExecSQLResponse {
+    string message = 1;
+    int32 lastInsertId = 2;
+    int32 affectRows = 3;
+}
+
+message User {
+    int32 id = 1;
+    string name = 2;
+    int32 age = 3;
+    string email = 4;
+}
