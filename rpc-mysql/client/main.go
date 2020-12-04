@@ -7,12 +7,44 @@ import (
 	"google.golang.org/grpc/grpclog"
 	"io"
 	pb "rpc-mysql/proto"
-	"time"
 )
 
 const (
 	addr = "42.192.11.222:3306"
 )
+
+func getUser(ctx context.Context, client pb.DAOClient) {
+	req := &pb.GetUsersRequest{}
+	stream, err := client.GetUsers(ctx, req)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for {
+		user, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println(*user)
+	}
+}
+
+func addUser(ctx context.Context, client pb.DAOClient, user *pb.User) {
+	req := &pb.AddUserRequest{User: user}
+	resp, err := client.AddUser(ctx, req)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(resp.Message)
+}
 
 func main() {
 	conn, err := grpc.Dial(addr, grpc.WithInsecure())
@@ -23,24 +55,16 @@ func main() {
 
 	client := pb.NewDAOClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	req := &pb.GetUsersRequest{}
-	stream, err := client.GetUsers(ctx, req)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	for {
-		user, err := stream.Recv()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		fmt.Println(*user)
-	}
+	getUser(ctx, client)
+
+	addUser(ctx, client, &pb.User{
+		Name:  "yujian",
+		Age:   23,
+		Email: "yujian@yujian.com",
+	})
+
+	getUser(ctx, client)
 }

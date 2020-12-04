@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	daoSrver.StartServer()
+	daoSrver.StartDAOServer()
 }

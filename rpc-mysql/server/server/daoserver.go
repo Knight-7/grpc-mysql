@@ -106,7 +106,7 @@ func getNewServerAndRegiste(d *dao.DAO) *grpc.Server {
 	return server
 }
 
-func StartServer() {
+func StartDAOServer() {
 	listen, err := net.Listen("tcp", serverAddr)
 	if err != nil {
 		grpclog.Fatalln(err)
