@@ -98,7 +98,7 @@ func (d daoServer) DeleteUser(ctx context.Context, req *pb.DeleteUserRequest) (*
 	return resp, nil
 }
 
-func newServer(d *dao.DAO) *grpc.Server {
+func getNewServerAndRegiste(d *dao.DAO) *grpc.Server {
 	daoserver := daoServer{d: d}
 
 	server := grpc.NewServer()
@@ -119,7 +119,7 @@ func StartServer() {
 	}
 
 	d := dao.NewDAO(db)
-	rpcServer := newServer(d)
+	rpcServer := getNewServerAndRegiste(d)
 
 	fmt.Println("rpc server start...")
 	if err = rpcServer.Serve(listen); err != nil {
