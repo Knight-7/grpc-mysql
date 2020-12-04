@@ -28,7 +28,7 @@ func (d DAO) GetUser(ctx context.Context, id int) (*pb.User, error) {
 
 func (d DAO) GetUsers(ctx context.Context) ([]*pb.User, error) {
 	var users []*models.User
-	sql := `SELECT id, name, age, eamil FROM user`
+	sql := `SELECT id, name, age, email FROM user`
 	err := ExecSelectSQL(ctx, d.db, &users, sql)
 	if err != nil {
 		return nil, err
