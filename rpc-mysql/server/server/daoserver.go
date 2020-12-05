@@ -34,7 +34,7 @@ func (d daoServer) GetUsers(req *pb.GetUsersRequest, stream pb.DAO_GetUsersServe
 		if err = stream.Send(&pb.GetUserResponse{User: user}); err != nil {
 			return err
 		}
-		time.Sleep(0.3)
+		time.Sleep(100 * time.Millisecond)
 	}
 
 	return nil
