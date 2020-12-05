@@ -8,7 +8,7 @@ ENV CGO_ENABLE=0 \
     GOOS=linux
 
 RUN cd rpc-mysql/server \
-    go build -o app .
+    && go build -o app .
 
 FROM alpine:latest as prod
 
