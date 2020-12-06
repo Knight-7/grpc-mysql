@@ -19,6 +19,8 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /root/
 
+COPY ./build/config.yaml .
+
 COPY --from=builder /dao/rpc-mysql/server/app .
 
-CMD [ "./app", "-config", "/dao/build/config.yaml" ]
+CMD [ "./app", "-config", "config.yaml" ]
