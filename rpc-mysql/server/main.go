@@ -1,14 +1,18 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"os"
 	"rpc-mysql/pkg/config"
 	"rpc-mysql/rpc-mysql/server/engine"
 )
 
 func main() {
-	filePath := os.Getenv("grpc_mysql_config")
+	var filePath string
+
+	flag.StringVar(&filePath, "config", "config.yaml", "config name")
+	flag.Parse()
+
 	if filePath == "" {
 		panic("config.yaml not found")
 	}
