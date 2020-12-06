@@ -7,17 +7,19 @@ import (
 	"rpc-mysql/rpc-mysql/server/utils"
 )
 
-func (d DAO) GetUser(ctx context.Context, id int) (*pb.User, error) {
-	var user models.User
+func (d *DAO) GetUser(ctx context.Context, id int) (*pb.User, error) {
+	var users []*models.User
 	sql := `
 		SELECT id, name, age, email
 		FROM user
 		WHERE id = ?
 	`
-	err := ExecSelectSQL(ctx, d.db, &user, sql, id)
+	err := ExecSelectSQL(ctx, d.db, &users, sql, id)
 	if err != nil {
 		return nil, err
 	}
+
+	user := users[0]
 	return &pb.User{
 		Id:    int32(user.Id),
 		Name:  user.Name,
@@ -26,7 +28,7 @@ func (d DAO) GetUser(ctx context.Context, id int) (*pb.User, error) {
 	}, nil
 }
 
-func (d DAO) GetUsers(ctx context.Context) ([]*pb.User, error) {
+func (d *DAO) GetUsers(ctx context.Context) ([]*pb.User, error) {
 	var users []*models.User
 	sql := `SELECT id, name, age, email FROM user`
 	err := ExecSelectSQL(ctx, d.db, &users, sql)
@@ -49,7 +51,7 @@ func (d DAO) AddUser(ctx context.Context, user *pb.User) (int, error) {
 	return id, nil
 }
 
-func (d DAO) UpdateUser(ctx context.Context, user *pb.User) (int, error) {
+func (d *DAO) UpdateUser(ctx context.Context, user *pb.User) (int, error) {
 	sql := `
 		UPDATE user SET name = ?, age = ?, email = ?
 		WHERE id = ?
@@ -62,7 +64,7 @@ func (d DAO) UpdateUser(ctx context.Context, user *pb.User) (int, error) {
 	return rows, nil
 }
 
-func (d DAO) DeleteUser(ctx context.Context, id int) (int, error) {
+func (d *DAO) DeleteUser(ctx context.Context, id int) (int, error) {
 	sql := `DELETE FROM user WHERE id = ?`
 	rows, err := ExecDeleteSQL(ctx, d.db, sql, id)
 	if err != nil {
