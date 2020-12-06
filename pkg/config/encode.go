@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 )
 
-var cfg *Config
+var cfg *Config = &Config{}
 
 //FIXME: cannot read yaml
 func LoadYAMLConfig(filename string) error {

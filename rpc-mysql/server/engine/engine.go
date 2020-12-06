@@ -35,6 +35,7 @@ func NewEngine(cfg *config.Config) (*Engine, error) {
 }
 
 func (e *Engine) Run() {
+	fmt.Println("start grpc server")
 	_ = e.serverAndListen(e.daoServer.Addr)
 }
 
