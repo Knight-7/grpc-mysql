@@ -2,9 +2,9 @@ package dao
 
 import (
 	"context"
-	"rpc-mysql/models"
-	pb "rpc-mysql/proto"
-	"rpc-mysql/rpc-mysql/server/utils"
+	"rpc-mysql/pkg/models"
+	pb "rpc-mysql/pkg/proto"
+	"rpc-mysql/pkg/utils"
 )
 
 func (d *DAO) GetUser(ctx context.Context, id int) (*pb.User, error) {

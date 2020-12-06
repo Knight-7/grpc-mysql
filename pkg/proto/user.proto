@@ -12,24 +12,22 @@ service DAO {
     rpc DeleteUser(DeleteUserRequest) returns (ExecSQLResponse) {}
 }
 
-message GetUsersRequest {
-
-}
+message GetUsersRequest {}
 
 message GetUserByIdRequest {
-    int32 id = 2;
+    int32 id = 1;
 }
 
 message AddUserRequest {
-    User user = 2;
+    User user = 1;
 }
 
 message UpdateUserRequest {
-    User user = 2;
+    User user = 1;
 }
 
 message DeleteUserRequest {
-    int32 id = 2;
+    int32 id = 1;
 }
 
 message GetUserResponse {
