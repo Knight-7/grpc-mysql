@@ -8,7 +8,8 @@ ADD . .
 
 ENV GOOS=linux \
     GO111MODULE=on \
-    GOPROXY=https://goproxy.cn,direct
+    GOPROXY=https://goproxy.cn,direct \
+    grpc_mysql_config=/dao/build/config.yaml
 
 RUN cd rpc-mysql/server \
     && go build -o app .
