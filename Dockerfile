@@ -6,8 +6,9 @@ WORKDIR /dao/
 
 ADD . .
 
-ENV CGO_ENABLE=0 \
-    GOOS=linux
+ENV GOOS=linux \
+    GO111MODULE=on \
+    GOPROXY=https://goproxy.cn,direct
 
 RUN cd rpc-mysql/server \
     && go build -o app .
