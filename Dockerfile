@@ -2,6 +2,8 @@ FROM golang:1.15.3-alpine as builder
 
 RUN apk --no-cache add git
 
+WORKDIR /dao/
+
 ADD . .
 
 ENV CGO_ENABLE=0 \
@@ -16,6 +18,6 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /root/
 
-COPY --from=builder rpc-mysql/server/app .
+COPY --from=builder /dao/rpc-mysql/server/app .
 
 CMD [ "./app" ]
