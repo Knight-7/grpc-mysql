@@ -7,8 +7,8 @@ type RPCServer struct {
 	Addr   string
 }
 
-func NewRPCServer(addr string, opt ...grpc.ServerOption) *RPCServer {
-	rpcServer := grpc.NewServer(opt...)
+func NewRPCServer(addr string, opts ...grpc.ServerOption) *RPCServer {
+	rpcServer := grpc.NewServer(opts...)
 	return &RPCServer{
 		Server: rpcServer,
 		Addr:   addr,

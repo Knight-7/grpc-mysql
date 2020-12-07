@@ -5,6 +5,7 @@ import (
 	"google.golang.org/grpc"
 )
 
+// 一元拦截器链
 func unaryServerInterceptChain(interceptors ...grpc.UnaryServerInterceptor) grpc.UnaryServerInterceptor {
 	//获取拦截器的长度
 	l := len(interceptors)
@@ -33,6 +34,7 @@ func unaryServerInterceptChain(interceptors ...grpc.UnaryServerInterceptor) grpc
 	}
 }
 
+//流拦截器链
 func streamServerInterceptorChain(interceptors ...grpc.StreamServerInterceptor) grpc.StreamServerInterceptor {
 	l := len(interceptors)
 	return func(srv interface{}, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
