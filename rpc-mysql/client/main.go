@@ -121,7 +121,7 @@ func main() {
 		Email: "haoyouking@haoyouking.com",
 	})*/
 
-	deleteUser(ctx, client, 5)
+	//deleteUser(ctx, client, 5)
 
 	getUserById(ctx, client, 1)
 

@@ -2,8 +2,10 @@ package engine
 
 import (
 	"fmt"
+	"google.golang.org/grpc"
 	"net"
 	"rpc-mysql/dao"
+	"rpc-mysql/interceptor"
 	"rpc-mysql/pkg/clientset"
 	"rpc-mysql/pkg/config"
 	pb "rpc-mysql/pkg/proto"
@@ -25,10 +27,16 @@ func NewEngine(cfg *config.Config) (*Engine, error) {
 		return nil, err
 	}
 
+	// 初始化dao和daoRPC服务
 	da := dao.NewDAO(gClientset.MySQL)
 	daoRPC := rpc.NewDaoRPC(da)
 
-	engine.daoServer = server.NewRPCServer(cfg.GetServerAddr())
+	// 注册拦截器（目前只有日志）
+	var options []grpc.ServerOption
+	options = append(options, grpc.UnaryInterceptor(interceptor.NewIntercept()))
+
+	// 注册DAO服务
+	engine.daoServer = server.NewRPCServer(cfg.GetServerAddr(), options...)
 	pb.RegisterDAOServer(engine.daoServer.Server, daoRPC)
 
 	return engine, nil
@@ -37,6 +45,10 @@ func NewEngine(cfg *config.Config) (*Engine, error) {
 func (e *Engine) Run() {
 	fmt.Println("start grpc server")
 	_ = e.serverAndListen(e.daoServer.Addr)
+}
+
+func (e *Engine) Stop() {
+
 }
 
 func (e *Engine) serverAndListen(addr string) error {
