@@ -33,7 +33,8 @@ func NewEngine(cfg *config.Config) (*Engine, error) {
 
 	// 注册拦截器（目前只有日志）
 	var options []grpc.ServerOption
-	options = append(options, grpc.UnaryInterceptor(interceptor.NewIntercept()))
+	options = append(options, grpc.UnaryInterceptor(interceptor.NewServerUnaryInterceptor()))
+	options = append(options, grpc.StreamInterceptor(interceptor.NewServerStreamInterceptor()))
 
 	// 注册DAO服务
 	engine.daoServer = server.NewRPCServer(cfg.GetServerAddr(), options...)
