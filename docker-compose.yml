@@ -1,0 +1,8 @@
+version: "3"
+services:
+  grpc-mysql:
+    build: .
+    ports:
+      - "3434:7234"
+    volumes:
+      - /root/log:/root/log

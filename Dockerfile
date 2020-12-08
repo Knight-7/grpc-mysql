@@ -15,7 +15,8 @@ RUN cd rpc-mysql/server \
 
 FROM alpine:latest as prod
 
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates \
+    && mkdir log
 
 WORKDIR /root/
 
