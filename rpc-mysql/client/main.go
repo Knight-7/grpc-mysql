@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	addr = "42.192.11.222:3434"
+	addr = "42.192.11.222:3306"
 )
 
 func getUser(ctx context.Context, client pb.DAOClient) {
@@ -108,7 +108,7 @@ func main() {
 
 	getUser(ctx, client)
 
-	addUser(ctx, client, &pb.User{
+	/*addUser(ctx, client, &pb.User{
 		Name:  "lin",
 		Age:   23,
 		Email: "lin@lin.com",
@@ -121,7 +121,7 @@ func main() {
 		Email: "haoyouking@haoyouking.com",
 	})
 
-	deleteUser(ctx, client, 6)
+	deleteUser(ctx, client, 6)*/
 
 	getUserById(ctx, client, 1)
 
