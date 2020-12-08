@@ -3,18 +3,26 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"rpc-mysql/pkg/config"
 	"rpc-mysql/rpc-mysql/server/engine"
 )
 
 func main() {
-	var filePath string
+	var (
+		filePath string
+		logBool  bool
+		authBool bool
+	)
 
 	flag.StringVar(&filePath, "config", "config.yaml", "config name")
+	flag.BoolVar(&logBool, "log", false, "whether use log")
+	flag.BoolVar(&authBool, "auth", false, "whether user auth")
+
 	flag.Parse()
 
 	if filePath == "" {
-		panic("config.yaml not found")
+		log.Panic("config.yaml not found")
 	}
 
 	err := config.LoadYAMLConfig(filePath)

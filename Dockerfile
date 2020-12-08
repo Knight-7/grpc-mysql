@@ -23,4 +23,4 @@ COPY ./build/config.yaml .
 
 COPY --from=builder /dao/rpc-mysql/server/app .
 
-CMD [ "./app", "-config", "config.yaml" ]
+CMD [ "./app", "-config", "config.yaml", "-log", "true", "-auth", "true" ]

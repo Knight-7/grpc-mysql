@@ -21,8 +21,16 @@ type DAOClientOptions struct {
 	Port    int    `json:"port" port:"port"`
 }
 
+type LogOptions struct {
+	FilePath         string `json:"file-path" yaml:"file-path"`
+	Level            string `json:"level" yaml:"level"`
+	TimeFormatter    string `json:"time-formatter" yaml:"time-formatter"`
+	DisableTimestamp bool   `json:"disable-timestamp" yaml:"disable-timestamp"`
+}
+
 type Config struct {
 	MySQL  MySQLOptions     `json:"mysql" yaml:"mysql"`
 	Server DAOServerOptions `json:"server" yaml:"server"`
 	Client DAOClientOptions `json:"client" yaml:"client"`
+	Log    LogOptions       `json:"log" yaml:"log"`
 }

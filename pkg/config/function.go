@@ -24,3 +24,19 @@ func (c *Config) GetMySQLDsn() string {
 
 	return mysqlDsn
 }
+
+func (c *Config) GetLogLevel() string {
+	return c.Log.Level
+}
+
+func (c *Config) GetLogFilePath() string {
+	return c.Log.FilePath
+}
+
+func (c *Config) GetLogTimeFormatter() string {
+	return c.Log.TimeFormatter
+}
+
+func (c *Config) GetLogDisableTimestamp() bool {
+	return c.Log.DisableTimestamp
+}

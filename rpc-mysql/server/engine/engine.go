@@ -22,6 +22,11 @@ func NewEngine(cfg *config.Config) (*Engine, error) {
 	engine := new(Engine)
 	engine.stopChan = make(chan struct{})
 
+	err := clientset.InitLog(cfg)
+	if err != nil {
+		return nil, err
+	}
+
 	gClientset, err := clientset.NewClientset(cfg)
 	if err != nil {
 		return nil, err

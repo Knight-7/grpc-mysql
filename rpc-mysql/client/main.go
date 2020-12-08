@@ -108,20 +108,20 @@ func main() {
 
 	getUser(ctx, client)
 
-	/*addUser(ctx, client, &pb.User{
-		Name:  "yujian",
+	addUser(ctx, client, &pb.User{
+		Name:  "lin",
 		Age:   23,
-		Email: "yujian@yujian.com",
-	})*/
+		Email: "lin@lin.com",
+	})
 
-	/*updateUser(ctx, client, &pb.User{
+	updateUser(ctx, client, &pb.User{
 		Id:    3,
 		Name:  "haoyouking",
-		Age:   23,
+		Age:   22,
 		Email: "haoyouking@haoyouking.com",
-	})*/
+	})
 
-	//deleteUser(ctx, client, 5)
+	deleteUser(ctx, client, 6)
 
 	getUserById(ctx, client, 1)
 

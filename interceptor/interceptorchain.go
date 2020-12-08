@@ -5,6 +5,16 @@ import (
 	"google.golang.org/grpc"
 )
 
+var (
+	logBool  = false
+	authBool = false
+)
+
+func SetupAuthAndLog(log, auth bool) {
+	logBool = log
+	authBool = auth
+}
+
 // 一元拦截器链
 func unaryServerInterceptChain(interceptors ...grpc.UnaryServerInterceptor) grpc.UnaryServerInterceptor {
 	//获取拦截器的长度
@@ -57,12 +67,24 @@ func streamServerInterceptorChain(interceptors ...grpc.StreamServerInterceptor) 
 
 func NewServerUnaryInterceptor() grpc.UnaryServerInterceptor {
 	var interceptors []grpc.UnaryServerInterceptor
-	interceptors = append(interceptors, logServerInterceptor, authServerUnaryInterceptor)
+	if logBool {
+		interceptors = append(interceptors, logServerInterceptor)
+	}
+	if authBool {
+		interceptors = append(interceptors, authServerUnaryInterceptor)
+	}
+
 	return unaryServerInterceptChain(interceptors...)
 }
 
 func NewServerStreamInterceptor() grpc.StreamServerInterceptor {
 	var interceptors []grpc.StreamServerInterceptor
-	interceptors = append(interceptors, logServerStreamInterceptor, authServerStreamInterceptor)
+	if logBool {
+		interceptors = append(interceptors, logServerStreamInterceptor)
+	}
+	if authBool {
+		interceptors = append(interceptors, authServerStreamInterceptor)
+	}
+
 	return streamServerInterceptorChain(interceptors...)
 }
