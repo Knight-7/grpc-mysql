@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	addr = "localhost:7234"
+	addr = "42.192.11.222:3434"
 )
 
 func getUser(ctx context.Context, client pb.DAOClient) {
