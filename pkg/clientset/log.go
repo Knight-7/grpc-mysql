@@ -6,10 +6,12 @@ import (
 	"rpc-mysql/pkg/config"
 )
 
-func InitLog(cfg *config.Config) error {
+func NewLogger(cfg *config.Config) (*logrus.Logger, error) {
+	log := logrus.New()
+
 	level, err := logrus.ParseLevel(cfg.GetLogLevel())
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	formatter := &logrus.JSONFormatter{
@@ -17,17 +19,15 @@ func InitLog(cfg *config.Config) error {
 		DisableTimestamp: cfg.GetLogDisableTimestamp(),
 	}
 
-	logrus.SetLevel(level)
-
+	log.SetLevel(level)
 	logrus.SetFormatter(formatter)
 
 	file, err := os.OpenFile(cfg.GetLogFilePath(), os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	defer file.Close()
 
-	logrus.SetOutput(file)
+	log.SetOutput(file)
 
-	return nil
+	return log, nil
 }

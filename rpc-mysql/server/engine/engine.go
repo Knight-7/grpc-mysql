@@ -2,6 +2,7 @@ package engine
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"net"
 	"rpc-mysql/dao"
@@ -15,6 +16,7 @@ import (
 
 type Engine struct {
 	daoServer *server.RPCServer
+	log       *logrus.Logger
 	stopChan  chan struct{}
 }
 
@@ -22,22 +24,20 @@ func NewEngine(cfg *config.Config) (*Engine, error) {
 	engine := new(Engine)
 	engine.stopChan = make(chan struct{})
 
-	err := clientset.InitLog(cfg)
-	if err != nil {
-		return nil, err
-	}
-
 	gClientset, err := clientset.NewClientset(cfg)
 	if err != nil {
 		return nil, err
 	}
 
+	engine.log = gClientset.GetLogger()
+
 	// 初始化dao和daoRPC服务
-	da := dao.NewDAO(gClientset.MySQL)
+	da := dao.NewDAO(gClientset.GetMySQL())
 	daoRPC := rpc.NewDaoRPC(da)
 
-	// 注册拦截器（目前只有日志）
+	// 注册拦截器
 	var options []grpc.ServerOption
+	interceptor.SetupAuthAndLog(cfg)
 	options = append(options, grpc.UnaryInterceptor(interceptor.NewServerUnaryInterceptor()))
 	options = append(options, grpc.StreamInterceptor(interceptor.NewServerStreamInterceptor()))
 
