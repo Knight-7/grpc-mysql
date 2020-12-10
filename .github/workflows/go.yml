@@ -8,9 +8,19 @@ on:
 
 jobs:
 
-  build:
-    name: Build
+  test:
+    name: Test
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: 5.7
+        env:
+          MYSQL_ROOT_PASSWORD: admin
+          MYSQL_DATABASE: grpc-test
+        ports:
+          - 3306
+
     steps:
 
     - name: Set up Go 1.x
@@ -33,4 +43,6 @@ jobs:
       run: go build -v ./...
 
     - name: Test
+      env: 
+        test_config_path: 
       run: go test -v ./...
