@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	addr = "42.192.11.222:3434"
+	addr = "knight.ren:3434"
 )
 
 func getUser(ctx context.Context, client pb.DAOClient) {
@@ -100,6 +100,8 @@ func main() {
 		grpclog.Fatalln(err)
 	}
 	defer conn.Close()
+
+	fmt.Println(addr)
 
 	client := pb.NewDAOClient(conn)
 
