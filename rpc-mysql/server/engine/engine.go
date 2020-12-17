@@ -37,7 +37,7 @@ func NewEngine(cfg *config.Config) (*Engine, error) {
 
 	// 注册拦截器
 	var options []grpc.ServerOption
-	interceptor.SetupAuthAndLog(cfg)
+	interceptor.InitInterceptor(cfg)
 	options = append(options, grpc.UnaryInterceptor(interceptor.NewServerUnaryInterceptor()))
 	options = append(options, grpc.StreamInterceptor(interceptor.NewServerStreamInterceptor()))
 

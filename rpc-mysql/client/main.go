@@ -6,11 +6,13 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
 	"io"
+	"rpc-mysql/pkg/auth"
 	pb "rpc-mysql/pkg/proto"
 )
 
 const (
-	addr = "knight.ren:3434"
+	//addr = "knight.ren:3434"
+	addr = "localhost:7234"
 )
 
 func getUser(ctx context.Context, client pb.DAOClient) {
@@ -95,7 +97,15 @@ func deleteUser(ctx context.Context, client pb.DAOClient, id int) {
 }
 
 func main() {
-	conn, err := grpc.Dial(addr, grpc.WithInsecure())
+	var opts []grpc.DialOption
+	opts = append(opts, grpc.WithPerRPCCredentials(&auth.Authorizer{
+		Login:    "login",
+		Password: "pass",
+		OpenTLS:  false,
+	}))
+	opts = append(opts, grpc.WithInsecure())
+
+	conn, err := grpc.Dial(addr, opts...)
 	if err != nil {
 		grpclog.Fatalln(err)
 	}
