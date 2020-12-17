@@ -16,11 +16,7 @@ func unaryServerInterceptChain(interceptors ...grpc.UnaryServerInterceptor) grpc
 		//构造一个链
 		chain := func(currentInter grpc.UnaryServerInterceptor, currentHandler grpc.UnaryHandler) grpc.UnaryHandler {
 			return func(currentCtx context.Context, currentReq interface{}) (interface{}, error) {
-				return currentInter(
-					currentCtx,
-					currentReq,
-					info,
-					currentHandler)
+				return currentInter(currentCtx, currentReq, info, currentHandler)
 			}
 		}
 		//声明一个handler
@@ -40,11 +36,7 @@ func streamServerInterceptorChain(interceptors ...grpc.StreamServerInterceptor) 
 	return func(srv interface{}, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
 		chain := func(currentInter grpc.StreamServerInterceptor, currentHandle grpc.StreamHandler) grpc.StreamHandler {
 			return func(currentSrv interface{}, currentSS grpc.ServerStream) error {
-				return currentInter(
-					currentSrv,
-					currentSS,
-					info,
-					currentHandle)
+				return currentInter(currentSrv, currentSS, info, currentHandle)
 			}
 		}
 		chainHandler := handler
