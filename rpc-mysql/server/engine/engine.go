@@ -7,6 +7,7 @@ import (
 	"net"
 	"rpc-mysql/dao"
 	"rpc-mysql/interceptor"
+	"rpc-mysql/pkg/auth"
 	"rpc-mysql/pkg/clientset"
 	"rpc-mysql/pkg/config"
 	pb "rpc-mysql/pkg/proto"
@@ -40,6 +41,13 @@ func NewEngine(cfg *config.Config) (*Engine, error) {
 	interceptor.InitInterceptor(cfg)
 	options = append(options, grpc.UnaryInterceptor(interceptor.NewServerUnaryInterceptor()))
 	options = append(options, grpc.StreamInterceptor(interceptor.NewServerStreamInterceptor()))
+
+	// 添加TLS证书
+	creds, err := auth.GetServerCreds(cfg)
+	if err != nil {
+		return nil, err
+	}
+	options = append(options, creds)
 
 	// 注册DAO服务
 	engine.daoServer = server.NewRPCServer(cfg.GetServerAddr(), options...)

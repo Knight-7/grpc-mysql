@@ -40,3 +40,15 @@ func (c *Config) GetLogTimeFormatter() string {
 func (c *Config) GetLogDisableTimestamp() bool {
 	return c.Log.DisableTimestamp
 }
+
+func (c *Config) GetCertFile() string {
+	return c.TLS.CertFile
+}
+
+func (c *Config) GetKeyFile() string {
+	return c.TLS.KeyFile
+}
+
+func (c *Config) GetServerName() string {
+	return c.TLS.ServerName
+}

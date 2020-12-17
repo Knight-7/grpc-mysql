@@ -7,7 +7,6 @@ import (
 
 var cfg *Config = &Config{}
 
-//FIXME: cannot read yaml
 func LoadYAMLConfig(filename string) error {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {

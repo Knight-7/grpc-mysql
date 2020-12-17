@@ -9,15 +9,9 @@ import (
 )
 
 func main() {
-	var (
-		filePath string
-		logBool  bool
-		authBool bool
-	)
+	var filePath string
 
 	flag.StringVar(&filePath, "config", "config.yaml", "config name")
-	flag.BoolVar(&logBool, "log", false, "whether use log")
-	flag.BoolVar(&authBool, "auth", false, "whether user auth")
 
 	flag.Parse()
 

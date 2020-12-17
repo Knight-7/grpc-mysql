@@ -23,6 +23,6 @@ func InitInterceptor(cfg *config.Config) {
 	authorizer = &auth.Authorizer{
 		Login:    "login",
 		Password: "pass",
-		OpenTLS:  false,
+		OpenTLS:  true,
 	}
 }
