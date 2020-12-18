@@ -6,12 +6,17 @@ import (
 )
 
 func authServerUnaryInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
-	//TODO: add auth
+	if err := authorizer.Auth(ctx); err != nil {
+		return nil, err
+	}
+
 	return handler(ctx, req)
 }
 
 func authServerStreamInterceptor(srv interface{}, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
+	if err := authorizer.Auth(ss.Context()); err != nil {
+		return err
+	}
 
-	//TODO: add auth
 	return handler(srv, ss)
 }

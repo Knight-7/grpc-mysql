@@ -2,15 +2,15 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
 	"io"
+	"log"
+	"rpc-mysql/pkg/auth"
+	"rpc-mysql/pkg/config"
 	pb "rpc-mysql/pkg/proto"
-)
-
-const (
-	addr = "42.192.11.222:3434"
 )
 
 func getUser(ctx context.Context, client pb.DAOClient) {
@@ -95,7 +95,30 @@ func deleteUser(ctx context.Context, client pb.DAOClient, id int) {
 }
 
 func main() {
-	conn, err := grpc.Dial(addr, grpc.WithInsecure())
+	filePath := flag.String("config", "config.yaml", "get config path")
+	flag.Parse()
+
+	err := config.LoadYAMLConfig(*filePath)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	cfg := config.GetConfig()
+
+	var opts []grpc.DialOption
+	opts = append(opts, grpc.WithPerRPCCredentials(&auth.Authorizer{
+		Login:    "login",
+		Password: "pass",
+		OpenTLS:  true,
+	}))
+
+	creds, err := auth.GetClientCreds(cfg)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	opts = append(opts, creds)
+
+	conn, err := grpc.Dial(cfg.GetClientTarget(), opts...)
 	if err != nil {
 		grpclog.Fatalln(err)
 	}
@@ -122,6 +145,19 @@ func main() {
 	})
 
 	deleteUser(ctx, client, 6)*/
+
+	updateUser(ctx, client, &pb.User{
+		Id:    4,
+		Name:  "yujian.ou",
+		Age:   23,
+		Email: "yujian.ou@123.com",
+	})
+
+	addUser(ctx, client, &pb.User{
+		Name:  "test",
+		Age:   34,
+		Email: "234@234.com",
+	})
 
 	getUserById(ctx, client, 1)
 

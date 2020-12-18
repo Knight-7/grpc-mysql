@@ -28,9 +28,17 @@ type LogOptions struct {
 	DisableTimestamp bool   `json:"disable-timestamp" yaml:"disable-timestamp"`
 }
 
+type TLSOptions struct {
+	CertFile   string `json:"cert-file" yaml:"cert-file"`
+	KeyFile    string `json:"key-file" yaml:"key-file"`
+	ServerName string `json:"server-name" yaml:"server-name"`
+}
+
 type Config struct {
 	MySQL  MySQLOptions     `json:"mysql" yaml:"mysql"`
 	Server DAOServerOptions `json:"server" yaml:"server"`
 	Client DAOClientOptions `json:"client" yaml:"client"`
 	Log    LogOptions       `json:"log" yaml:"log"`
+	TLS    TLSOptions       `json:"tls" yaml:"tls"`
+	PWD    string
 }
