@@ -11,7 +11,7 @@ import (
 	"rpc-mysql/pkg/clientset"
 	"rpc-mysql/pkg/config"
 	pb "rpc-mysql/pkg/proto"
-	"rpc-mysql/rpc"
+	"rpc-mysql/pkg/rpc"
 	"rpc-mysql/rpc-mysql/server/server"
 )
 

@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"rpc-mysql/pkg/config"
 	"rpc-mysql/rpc-mysql/server/engine"
@@ -21,16 +20,14 @@ func main() {
 
 	err := config.LoadYAMLConfig(filePath)
 	if err != nil {
-		//TODO: add log
-		fmt.Println(err)
+		log.Fatalln("load yaml config failed")
 		return
 	}
 	cfg := config.GetConfig()
 
 	daoEngine, err := engine.NewEngine(cfg)
 	if err != nil {
-		//TODO: add log
-		fmt.Println(err)
+		log.Fatalln("engine start failed")
 		return
 	}
 	daoEngine.Run()

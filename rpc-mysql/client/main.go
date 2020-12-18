@@ -146,11 +146,17 @@ func main() {
 
 	deleteUser(ctx, client, 6)*/
 
-	updateUser(ctx, client, &pb.User {
+	updateUser(ctx, client, &pb.User{
 		Id:    4,
 		Name:  "yujian.ou",
 		Age:   23,
 		Email: "yujian.ou@123.com",
+	})
+
+	addUser(ctx, client, &pb.User{
+		Name:  "test",
+		Age:   34,
+		Email: "234@234.com",
 	})
 
 	getUserById(ctx, client, 1)
