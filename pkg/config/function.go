@@ -30,7 +30,7 @@ func (c *Config) GetLogLevel() string {
 }
 
 func (c *Config) GetLogFilePath() string {
-	return c.Log.FilePath
+	return c.PWD + c.Log.FilePath
 }
 
 func (c *Config) GetLogTimeFormatter() string {
@@ -42,11 +42,11 @@ func (c *Config) GetLogDisableTimestamp() bool {
 }
 
 func (c *Config) GetCertFile() string {
-	return c.TLS.CertFile
+	return c.PWD + "keys/" + c.TLS.CertFile
 }
 
 func (c *Config) GetKeyFile() string {
-	return c.TLS.KeyFile
+	return c.PWD + "keys/" + c.TLS.KeyFile
 }
 
 func (c *Config) GetServerName() string {

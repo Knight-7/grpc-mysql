@@ -40,4 +40,5 @@ type Config struct {
 	Client DAOClientOptions `json:"client" yaml:"client"`
 	Log    LogOptions       `json:"log" yaml:"log"`
 	TLS    TLSOptions       `json:"tls" yaml:"tls"`
+	PWD    string
 }

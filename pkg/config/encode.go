@@ -1,11 +1,24 @@
 package config
 
 import (
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"log"
+	"os"
+
+	"gopkg.in/yaml.v2"
 )
 
 var cfg *Config = &Config{}
+
+func init() {
+	pwd, err := os.Getwd()
+	if err != nil {
+		log.Println("init config err, can not get pwd")
+		return
+	}
+
+	cfg.PWD = pwd + "/../../"
+}
 
 func LoadYAMLConfig(filename string) error {
 	data, err := ioutil.ReadFile(filename)

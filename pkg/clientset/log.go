@@ -1,9 +1,10 @@
 package clientset
 
 import (
-	"github.com/sirupsen/logrus"
 	"os"
 	"rpc-mysql/pkg/config"
+
+	"github.com/sirupsen/logrus"
 )
 
 func NewLogger(cfg *config.Config) (*logrus.Logger, error) {
@@ -29,7 +30,7 @@ func NewLogger(cfg *config.Config) (*logrus.Logger, error) {
 		}
 	}
 
-	file, err := os.OpenFile(cfg.GetLogFilePath()+"/info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+	file, err := os.OpenFile(cfg.GetLogFilePath() + "/info.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err != nil {
 		return nil, err
 	}

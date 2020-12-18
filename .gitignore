@@ -3,5 +3,4 @@ build/*
 .idea/
 .env
 log/*
-*.log
 keys/*
