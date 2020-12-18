@@ -15,13 +15,14 @@ RUN cd rpc-mysql/server \
 
 FROM alpine:latest as prod
 
+WORKDIR /root
+
 RUN apk --no-cache add ca-certificates \
-    && mkdir log
+    && mkdir keys
 
-WORKDIR /root/
-
-COPY ./build/config.yaml .
+COPY build/config.yaml .
+COPY keys keys/
 
 COPY --from=builder /dao/rpc-mysql/server/app .
 
-CMD [ "./app", "-config", "config.yaml", "-log", "true", "-auth", "true" ]
+CMD [ "./app", "-config", "config.yaml" ]
