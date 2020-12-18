@@ -97,7 +97,6 @@ func deleteUser(ctx context.Context, client pb.DAOClient, id int) {
 func main() {
 	filePath := flag.String("config", "config.yaml", "get config path")
 	flag.Parse()
-	fmt.Println(*filePath)
 
 	err := config.LoadYAMLConfig(*filePath)
 	if err != nil {
@@ -146,6 +145,13 @@ func main() {
 	})
 
 	deleteUser(ctx, client, 6)*/
+
+	updateUser(ctx, client, &pb.User {
+		Id:    4,
+		Name:  "yujian.ou",
+		Age:   23,
+		Email: "yujian.ou@123.com",
+	})
 
 	getUserById(ctx, client, 1)
 

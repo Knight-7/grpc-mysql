@@ -49,14 +49,14 @@ func streamServerInterceptorChain(interceptors ...grpc.StreamServerInterceptor) 
 
 func NewServerUnaryInterceptor() grpc.UnaryServerInterceptor {
 	var interceptors []grpc.UnaryServerInterceptor
-	interceptors = append(interceptors, logServerInterceptor, authServerUnaryInterceptor)
+	interceptors = append(interceptors, authServerUnaryInterceptor, logServerInterceptor)
 
 	return unaryServerInterceptChain(interceptors...)
 }
 
 func NewServerStreamInterceptor() grpc.StreamServerInterceptor {
 	var interceptors []grpc.StreamServerInterceptor
-	interceptors = append(interceptors, logServerStreamInterceptor, authServerStreamInterceptor)
+	interceptors = append(interceptors, authServerStreamInterceptor, logServerStreamInterceptor)
 
 	return streamServerInterceptorChain(interceptors...)
 }

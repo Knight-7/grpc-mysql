@@ -3,9 +3,9 @@ package auth
 import (
 	"context"
 	"fmt"
-	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
 type Authorizer struct {
@@ -41,7 +41,7 @@ func (a *Authorizer) Auth(ctx context.Context) error {
 	}
 
 	if login != a.Login || pass != a.Password {
-		return grpc.Errorf(codes.Unauthenticated, "token invalid")
+		return status.Errorf(codes.Unauthenticated, "token invalid")
 	}
 
 	return nil
