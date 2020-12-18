@@ -17,7 +17,7 @@ func init() {
 		return
 	}
 
-	cfg.PWD = pwd + "/../../"
+	cfg.PWD = pwd
 }
 
 func LoadYAMLConfig(filename string) error {

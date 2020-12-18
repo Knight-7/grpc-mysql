@@ -42,11 +42,11 @@ func (c *Config) GetLogDisableTimestamp() bool {
 }
 
 func (c *Config) GetCertFile() string {
-	return c.PWD + "keys/" + c.TLS.CertFile
+	return c.PWD + c.TLS.CertFile
 }
 
 func (c *Config) GetKeyFile() string {
-	return c.PWD + "keys/" + c.TLS.KeyFile
+	return c.PWD + c.TLS.KeyFile
 }
 
 func (c *Config) GetServerName() string {

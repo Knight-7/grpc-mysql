@@ -25,6 +25,7 @@ func NewEngine(cfg *config.Config) (*Engine, error) {
 	engine := new(Engine)
 	engine.stopChan = make(chan struct{})
 
+	// 初始化组件
 	gClientset, err := clientset.NewClientset(cfg)
 	if err != nil {
 		return nil, err
