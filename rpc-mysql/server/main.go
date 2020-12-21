@@ -27,7 +27,7 @@ func main() {
 
 	daoEngine, err := engine.NewEngine(cfg)
 	if err != nil {
-		log.Fatalln("engine start failed")
+		log.Fatalln("engine start failed", err)
 		return
 	}
 	daoEngine.Run()

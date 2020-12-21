@@ -1,8 +1,28 @@
 version: "3"
 services:
-  grpc-mysql:
+  grpc-server:
     build: .
+    container_name: rpc-server
+    networks:
+      rpc-network
     ports:
       - "3434:7234"
     volumes:
       - /root/log:/root/log
+    command: sh ./wait-for rpc-mysql:3306 .app -config config.yaml
+
+  rpc-mysql:
+    image: "mysql:5.7"
+    container_name: rpc-mysql
+    networks:
+      rpc-network
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_volume:/var/lib/mysql
+      - assert/:docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: "Fight7!"
+
+networks:
+  rpc-network
